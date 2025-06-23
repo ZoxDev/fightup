@@ -226,6 +226,72 @@
               }
             }
           ]
+        },
+        {
+          "__guid": "15c8f460-c81a-4c45-b56e-a0ba5e3c95a3",
+          "__version": 1,
+          "__Prefab": "prefabs/pressure-plate.prefab",
+          "__PrefabInstancePatch": {
+            "AddedObjects": [],
+            "RemovedObjects": [],
+            "PropertyOverrides": [
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                },
+                "Property": "Name",
+                "Value": "pressure-plate (1)"
+              },
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                },
+                "Property": "Position",
+                "Value": "-302.3787,-843.0848,-203.8155"
+              }
+            ],
+            "MovedObjects": []
+          },
+          "__PrefabIdToInstanceId": {
+            "d75410ff-eec8-4381-a6a3-31f14090f534": "15c8f460-c81a-4c45-b56e-a0ba5e3c95a3",
+            "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "ca152856-9148-487c-81fe-f40b1c6563ca",
+            "3d348ef3-3a45-4c33-90e3-cb2218951131": "24bcbe48-9079-4a5c-af6e-fb82c3aaee22",
+            "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "e2e7e6a9-163a-472f-bd73-6685caf3aca4",
+            "3932e3cc-9283-4cc7-9f2c-75c79f618302": "234935ba-a5b9-4b9a-a515-364c17b90db8",
+            "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "428ba368-e39c-4f9f-9739-54614983f167",
+            "997671a3-7e6b-42c5-a060-20844afe7593": "e7dc439a-2da1-4cf5-8485-89fe7a9b5eb5"
+          }
+        },
+        {
+          "__guid": "7b11c198-eeb0-4b36-b730-f1c93ae9c7a4",
+          "__version": 1,
+          "__Prefab": "prefabs/pressure-plate.prefab",
+          "__PrefabInstancePatch": {
+            "AddedObjects": [],
+            "RemovedObjects": [],
+            "PropertyOverrides": [
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                },
+                "Property": "Position",
+                "Value": "-302.3787,-661.5375,-203.8155"
+              }
+            ],
+            "MovedObjects": []
+          },
+          "__PrefabIdToInstanceId": {
+            "d75410ff-eec8-4381-a6a3-31f14090f534": "7b11c198-eeb0-4b36-b730-f1c93ae9c7a4",
+            "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "dedb83c5-af4a-48a3-bf5f-88add529f726",
+            "3d348ef3-3a45-4c33-90e3-cb2218951131": "ea32e264-0fe1-4388-9683-1bc147a466ab",
+            "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "43b722a2-ccc9-4c43-98b0-a118e54f725c",
+            "3932e3cc-9283-4cc7-9f2c-75c79f618302": "20179144-f034-4e3c-b9d8-8fabee204053",
+            "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "260f426e-5836-4ca6-88ff-07b15cff0ae6",
+            "997671a3-7e6b-42c5-a060-20844afe7593": "8645931f-195b-46ec-a47d-69f2baa09f12"
+          }
         }
       ]
     },
@@ -250,6 +316,7 @@
           "__enabled": true,
           "AirFriction": 0.1,
           "GroundFriction": 4,
+          "itemList": [],
           "JumpForce": 400,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -499,72 +566,6 @@
           "Children": []
         }
       ]
-    },
-    {
-      "__guid": "7b11c198-eeb0-4b36-b730-f1c93ae9c7a4",
-      "__version": 1,
-      "__Prefab": "prefabs/pressure-plate.prefab",
-      "__PrefabInstancePatch": {
-        "AddedObjects": [],
-        "RemovedObjects": [],
-        "PropertyOverrides": [
-          {
-            "Target": {
-              "Type": "GameObject",
-              "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
-            },
-            "Property": "Position",
-            "Value": "0,-226.9399,6.5625"
-          }
-        ],
-        "MovedObjects": []
-      },
-      "__PrefabIdToInstanceId": {
-        "d75410ff-eec8-4381-a6a3-31f14090f534": "7b11c198-eeb0-4b36-b730-f1c93ae9c7a4",
-        "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "dedb83c5-af4a-48a3-bf5f-88add529f726",
-        "3d348ef3-3a45-4c33-90e3-cb2218951131": "ea32e264-0fe1-4388-9683-1bc147a466ab",
-        "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "43b722a2-ccc9-4c43-98b0-a118e54f725c",
-        "3932e3cc-9283-4cc7-9f2c-75c79f618302": "20179144-f034-4e3c-b9d8-8fabee204053",
-        "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "260f426e-5836-4ca6-88ff-07b15cff0ae6",
-        "997671a3-7e6b-42c5-a060-20844afe7593": "8645931f-195b-46ec-a47d-69f2baa09f12"
-      }
-    },
-    {
-      "__guid": "15c8f460-c81a-4c45-b56e-a0ba5e3c95a3",
-      "__version": 1,
-      "__Prefab": "prefabs/pressure-plate.prefab",
-      "__PrefabInstancePatch": {
-        "AddedObjects": [],
-        "RemovedObjects": [],
-        "PropertyOverrides": [
-          {
-            "Target": {
-              "Type": "GameObject",
-              "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
-            },
-            "Property": "Name",
-            "Value": "pressure-plate (1)"
-          },
-          {
-            "Target": {
-              "Type": "GameObject",
-              "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
-            },
-            "Property": "Position",
-            "Value": "0,-408.4872,6.5625"
-          }
-        ],
-        "MovedObjects": []
-      },
-      "__PrefabIdToInstanceId": {
-        "d75410ff-eec8-4381-a6a3-31f14090f534": "15c8f460-c81a-4c45-b56e-a0ba5e3c95a3",
-        "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "ca152856-9148-487c-81fe-f40b1c6563ca",
-        "3d348ef3-3a45-4c33-90e3-cb2218951131": "24bcbe48-9079-4a5c-af6e-fb82c3aaee22",
-        "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "e2e7e6a9-163a-472f-bd73-6685caf3aca4",
-        "3932e3cc-9283-4cc7-9f2c-75c79f618302": "234935ba-a5b9-4b9a-a515-364c17b90db8",
-        "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "428ba368-e39c-4f9f-9739-54614983f167",
-        "997671a3-7e6b-42c5-a060-20844afe7593": "e7dc439a-2da1-4cf5-8485-89fe7a9b5eb5"
-      }
     }
   ],
   "SceneProperties": {

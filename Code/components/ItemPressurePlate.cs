@@ -1,9 +1,15 @@
 using System;
 
-public sealed class ItemPressurePlate : Component, Component.ITriggerListener
+public sealed class ItemPressurePlate : Component, Component.ITriggerListener, Component.IPressable
 {
 	[Property] public List<GameObject> prefabItemList { get; set; }
 
+	private GameObject pickedPrefabItem { get; set; }
+	private void PickRandomItem()
+	{
+		int randomItemIndex = new Random().Next( 0, prefabItemList.Count );
+		pickedPrefabItem = prefabItemList[randomItemIndex];
+	}
 	protected override void OnAwake()
 	{
 		base.OnAwake();
@@ -12,41 +18,44 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener
 		ApplyItemModel();
 	}
 
-	// TODO: implem IPressable to character controller so it can be used everywhere (get all collision and if they have pressable component)
-	private bool canPress { get; set; } = false;
+	private bool allowPress { get; set; } = false;
+	private void TakeItem( GameObject gameObject )
+	{
+		if ( !gameObject.Tags.Has( "player" ) ) return;
+
+		PlayerController2D playerController = gameObject.GetComponent<PlayerController2D>();
+		Item itemComponent = pickedPrefabItem.GetComponent<Item>();
+
+		bool isSameItemType = playerController.itemList.Find( item => item.itemType == itemComponent.itemType ) != null;
+		if ( isSameItemType && !allowPress )
+		{
+			allowPress = true;
+			return;
+		}
+
+		playerController.itemList.Add( itemComponent );
+
+		if ( !isSameItemType ) GameObject.Destroy();
+	}
+
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
-		// TODO: don't allow press when user already have an item of the same type
-		canPress = true;
+		TakeItem( other.GameObject );
 	}
 
-	void ITriggerListener.OnTriggerExit( Collider other )
+	bool IPressable.Press( IPressable.Event e )
 	{
-		canPress = false;
+		if ( allowPress ) TakeItem( e.Source.GameObject );
+		GameObject.Destroy();
+
+		return true;
 	}
 
-	private void PressUse()
-	{
-		if ( !canPress ) return;
-		if ( Input.Pressed( "use" ) )
-		{
-		}
-	}
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
-		PressUse();
-
 		ItemMovement();
-
 		DebugText();
-	}
-
-	private GameObject pickedPrefabItem { get; set; }
-	private void PickRandomItem()
-	{
-		int randomItemIndex = new Random().Next( 0, prefabItemList.Count );
-		pickedPrefabItem = prefabItemList[randomItemIndex];
 	}
 
 	private void ApplyItemModel()
