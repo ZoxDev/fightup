@@ -1,0 +1,70 @@
+{
+  "RootObject": {
+    "__guid": "93dc5126-a748-476c-afb0-192c283cb5d1",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "item-box-gloves",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "BoxGlovesItem",
+        "__guid": "487718db-9094-407b-bc6e-3691c5639b21",
+        "__enabled": true,
+        "inputAction": {
+          "Name": "attack",
+          "GroupName": "Other",
+          "Title": "attack",
+          "KeyboardCode": "MOUSE1",
+          "GamepadCode": "RightTrigger"
+        },
+        "itemType": "Weapon",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "prefabModel": null,
+        "pressType": "Pressed",
+        "pressurePlateMaterial": "materials/item/glove.vmat",
+        "pressurePlateModel": "models/items/both gloves.vmdl",
+        "useCount": 1
+      }
+    ],
+    "Children": [],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}
