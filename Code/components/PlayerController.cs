@@ -15,12 +15,15 @@ public sealed class PlayerController2D : Component
 	[RequireComponent] CharacterController characterController { get; set; }
 	[RequireComponent] CitizenAnimationHelper animationHelper { get; set; }
 
+	// Items
 	[Group( "Items" )]
-	public List<Item> itemList { get; set; }
+	[Property] public List<Item> itemList { get; set; }
 
+	private CapsuleCollider playerCollider { get; set; }
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+		playerCollider = GameObject.GetComponent<CapsuleCollider>();
 	}
 
 	protected override void OnFixedUpdate()
@@ -33,7 +36,7 @@ public sealed class PlayerController2D : Component
 		if ( isJumping ) Jump();
 		Rotate( wishVelocity );
 		Animate( wishVelocity, isJumping );
-
+		Pressing();
 		// UseItem();
 	}
 
@@ -104,8 +107,21 @@ public sealed class PlayerController2D : Component
 	/* -----------------------------------------------------------------------------
 	 * Press
 	 * -----------------------------------------------------------------------------*/
+	void Pressing()
+	{
+		foreach ( Collider obj in playerCollider.Touching )
+		{
+			IPressable pressable = obj.GetComponent<IPressable>();
+			if ( pressable == null ) return;
 
-	//  TODO: on collision of a go with IPressable permit the press (check player controller of sbox)
+			if ( Input.Pressed( "use" ) )
+			{
+				IPressable.Event e = new IPressable.Event();
+				e.Source = GameObject.GetComponent<PlayerController2D>();
+				pressable.Press( e );
+			}
+		}
+	}
 
 	/* -----------------------------------------------------------------------------
 	 * Items
