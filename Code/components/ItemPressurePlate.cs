@@ -21,7 +21,6 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 	private bool allowPress { get; set; } = false;
 	private void TakeItem( GameObject gameObject )
 	{
-
 		if ( !gameObject.Tags.Has( "player" ) ) return;
 
 		PlayerController2D playerController = gameObject.GetComponent<PlayerController2D>();
@@ -35,8 +34,13 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 		}
 
 		GameObject itemListGameObject = playerController.GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
-		// TODO: insure that the clone isn't clone in scene minimal but only in item list
-		itemListGameObject.Children.Add( pickedPrefabItem.Clone() );
+
+		CloneConfig cloneConfig = new CloneConfig();
+		cloneConfig.Name = pickedPrefabItem.Name;
+		cloneConfig.Parent = itemListGameObject;
+		cloneConfig.StartEnabled = true;
+
+		pickedPrefabItem.Clone( cloneConfig );
 
 		playerController.FetchItems();
 

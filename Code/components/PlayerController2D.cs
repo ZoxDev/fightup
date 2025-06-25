@@ -1,4 +1,3 @@
-using System;
 using Sandbox.Citizen;
 
 public sealed class PlayerController2D : Component
@@ -26,9 +25,6 @@ public sealed class PlayerController2D : Component
 
 	protected override void OnFixedUpdate()
 	{
-		Log.Info( itemComponentList.Count );
-
-
 		var isJumping = Input.Pressed( "Jump" );
 
 		Vector3 wishVelocity = getWishVelocity();
@@ -131,24 +127,30 @@ public sealed class PlayerController2D : Component
 	public void FetchItems()
 	{
 		GameObject itemListGameObject = GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
+		Log.Info( "itemListGameObject" + itemListGameObject.Children.First() );
 
 		foreach ( GameObject itemGameObject in itemListGameObject.Children )
 		{
-			itemComponentList.Add( itemGameObject.GetComponent<Item>() );
+			Item itemComnponent = itemGameObject.GetComponent<Item>();
+
+			if ( itemComnponent == null )
+			{
+				Log.Error( "the item has fail to fetch" );
+				return;
+			}
+
+			itemComponentList.Add( itemComnponent );
 		}
 	}
 
 	void UseItem()
 	{
-
 		foreach ( Item item in itemComponentList )
 		{
-			Item itemComponent = item.GetComponent<Item>();
-
-			bool isUsing = itemComponent.pressType == PressTypeEnum.Pressed ? Input.Keyboard.Pressed( itemComponent.inputAction.KeyboardCode ) : Input.Keyboard.Down( itemComponent.inputAction.KeyboardCode );
+			bool isUsing = item.pressType == PressTypeEnum.Pressed ? Input.Keyboard.Pressed( item.inputAction.KeyboardCode ) : Input.Keyboard.Down( item.inputAction.KeyboardCode );
 			if ( isUsing )
 			{
-				itemComponent.OnUseItem();
+				item.OnUseItem();
 			}
 		}
 	}

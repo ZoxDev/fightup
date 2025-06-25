@@ -1,5 +1,3 @@
-using Sandbox;
-
 public enum ItemTypeEnum
 {
     Weapon,
@@ -37,18 +35,13 @@ public class Item : Component
     protected override void OnAwake()
     {
         base.OnAwake();
-
-        // TODO: not sure it's the best way here should be parent but the go is clone on top of the scene not in palyer go
-        GameObject player = GameObject.Scene.Directory.FindByName( "Player" ).First();
-
-        Log.Info( player );
+        GameObject player = GameObject.Parent.Parent;
 
         if ( player.Tags.Has( "player" ) )
         {
             itemListInPlayer = player.Children.Find( child => child.Tags.Has( "item-list" ) );
             playerController = player.GetComponent<PlayerController2D>();
         }
-
     }
 
     protected override void OnDestroy()
