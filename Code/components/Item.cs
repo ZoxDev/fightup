@@ -31,14 +31,43 @@ public class Item : Component
     [Group( "Models" )]
     [Property] public Model prefabModel { get; set; }
 
+    private GameObject itemListInPlayer { get; set; }
+    private PlayerController2D playerController { get; set; }
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+
+        // TODO: not sure it's the best way here should be parent but the go is clone on top of the scene not in palyer go
+        GameObject player = GameObject.Scene.Directory.FindByName( "Player" ).First();
+
+        Log.Info( player );
+
+        if ( player.Tags.Has( "player" ) )
+        {
+            itemListInPlayer = player.Children.Find( child => child.Tags.Has( "item-list" ) );
+            playerController = player.GetComponent<PlayerController2D>();
+        }
+
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        itemListInPlayer.Children.Remove( GameObject );
+        playerController.itemComponentList.Find( item => item == this );
+        playerController.itemComponentList.Remove( this );
+    }
+
     public virtual void OnUseItem()
     {
+        useCount -= 1;
+
         if ( useCount == 0 )
         {
             GameObject.Destroy();
             return;
         }
-        useCount -= 1;
     }
 
 }

@@ -316,7 +316,7 @@
           "__enabled": true,
           "AirFriction": 0.1,
           "GroundFriction": 4,
-          "itemList": [],
+          "itemList": null,
           "JumpForce": 400,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -563,6 +563,23 @@
               "OnComponentUpdate": null
             }
           ],
+          "Children": []
+        },
+        {
+          "__guid": "c875f1f4-46b1-4999-9be4-2b2f5aaa051c",
+          "__version": 1,
+          "Flags": 0,
+          "Name": "Item List",
+          "Position": "0,0,0",
+          "Rotation": "0,0,0,1",
+          "Scale": "1,1,1",
+          "Tags": "item-list",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "NetworkOrphaned": 0,
+          "OwnerTransfer": 1,
+          "Components": [],
           "Children": []
         }
       ]

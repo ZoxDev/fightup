@@ -14,20 +14,21 @@ public sealed class PlayerController2D : Component
 
 	[RequireComponent] CharacterController characterController { get; set; }
 	[RequireComponent] CitizenAnimationHelper animationHelper { get; set; }
-
 	// Items
 	[Group( "Items" )]
-	[Property] public List<Item> itemList { get; set; }
-
 	private CapsuleCollider playerCollider { get; set; }
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+		itemComponentList = new List<Item>();
 		playerCollider = GameObject.GetComponent<CapsuleCollider>();
 	}
 
 	protected override void OnFixedUpdate()
 	{
+		Log.Info( itemComponentList.Count );
+
+
 		var isJumping = Input.Pressed( "Jump" );
 
 		Vector3 wishVelocity = getWishVelocity();
@@ -37,13 +38,12 @@ public sealed class PlayerController2D : Component
 		Rotate( wishVelocity );
 		Animate( wishVelocity, isJumping );
 		Pressing();
-		// UseItem();
+		UseItem();
 	}
 
 	/* -----------------------------------------------------------------------------
 	 * Movement
 	 * -----------------------------------------------------------------------------*/
-
 	Vector3 getWishVelocity()
 	{
 		Vector3 analogMove = Input.AnalogMove;
@@ -104,6 +104,7 @@ public sealed class PlayerController2D : Component
 		animationHelper.IsGrounded = characterController.IsOnGround;
 	}
 
+
 	/* -----------------------------------------------------------------------------
 	 * Press
 	 * -----------------------------------------------------------------------------*/
@@ -117,7 +118,7 @@ public sealed class PlayerController2D : Component
 			if ( Input.Pressed( "use" ) )
 			{
 				IPressable.Event e = new IPressable.Event();
-				e.Source = GameObject.GetComponent<PlayerController2D>();
+				e.Source = this;
 				pressable.Press( e );
 			}
 		}
@@ -126,20 +127,29 @@ public sealed class PlayerController2D : Component
 	/* -----------------------------------------------------------------------------
 	 * Items
 	 * -----------------------------------------------------------------------------*/
+	[Property] public List<Item> itemComponentList { get; set; }
+	public void FetchItems()
+	{
+		GameObject itemListGameObject = GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
+
+		foreach ( GameObject itemGameObject in itemListGameObject.Children )
+		{
+			itemComponentList.Add( itemGameObject.GetComponent<Item>() );
+		}
+	}
+
 	void UseItem()
 	{
-		// if ( itemList.Count > 0 )
-		// {
-		// 	foreach ( Item item in itemList )
-		// 	{
-		// 		Item itemComponent = item.GetComponent<Item>();
 
-		// 		bool isUsing = itemComponent.pressType == PressTypeEnum.Pressed ? Input.Pressed( itemComponent.inputAction.KeyboardCode ) : Input.Down( itemComponent.inputAction.KeyboardCode );
-		// 		if ( isUsing )
-		// 		{
-		// 			itemComponent.OnUseItem();
-		// 		}
-		// 	}
-		// }
+		foreach ( Item item in itemComponentList )
+		{
+			Item itemComponent = item.GetComponent<Item>();
+
+			bool isUsing = itemComponent.pressType == PressTypeEnum.Pressed ? Input.Keyboard.Pressed( itemComponent.inputAction.KeyboardCode ) : Input.Keyboard.Down( itemComponent.inputAction.KeyboardCode );
+			if ( isUsing )
+			{
+				itemComponent.OnUseItem();
+			}
+		}
 	}
 }

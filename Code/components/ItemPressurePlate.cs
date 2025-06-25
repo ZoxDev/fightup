@@ -21,19 +21,24 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 	private bool allowPress { get; set; } = false;
 	private void TakeItem( GameObject gameObject )
 	{
+
 		if ( !gameObject.Tags.Has( "player" ) ) return;
 
 		PlayerController2D playerController = gameObject.GetComponent<PlayerController2D>();
 		Item itemComponent = pickedPrefabItem.GetComponent<Item>();
 
-		bool isSameItemType = playerController.itemList.Find( item => item.itemType == itemComponent.itemType ) != null;
+		bool isSameItemType = playerController.itemComponentList.Find( item => item.itemType == itemComponent.itemType ) != null;
 		if ( isSameItemType && !allowPress )
 		{
 			allowPress = true;
 			return;
 		}
 
-		playerController.itemList.Add( itemComponent );
+		GameObject itemListGameObject = playerController.GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
+		// TODO: insure that the clone isn't clone in scene minimal but only in item list
+		itemListGameObject.Children.Add( pickedPrefabItem.Clone() );
+
+		playerController.FetchItems();
 
 		if ( !isSameItemType ) GameObject.Destroy();
 	}

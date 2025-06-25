@@ -5,5 +5,7 @@ public sealed class BoxGlovesItem : Item
 		base.OnUseItem();
 
 		Log.Info( "Box gloves used !" );
+		Log.Info( this.useCount );
+
 	}
 }
