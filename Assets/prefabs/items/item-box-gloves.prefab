@@ -19,9 +19,9 @@
         "__guid": "487718db-9094-407b-bc6e-3691c5639b21",
         "__enabled": true,
         "inputAction": {
-          "Name": "attack",
-          "GroupName": "Other",
-          "Title": "attack",
+          "Name": "attack2",
+          "GroupName": "Actions",
+          "Title": "attack-with-item",
           "KeyboardCode": "MOUSE1",
           "GamepadCode": "RightTrigger"
         },

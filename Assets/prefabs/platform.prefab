@@ -6,7 +6,7 @@
     "Name": "platform",
     "Position": "0,0,0",
     "Rotation": "0,0,0,1",
-    "Scale": "1,3,0.25",
+    "Scale": "1,2,1",
     "Tags": "",
     "Enabled": true,
     "NetworkMode": 2,
@@ -32,8 +32,8 @@
         "BodyGroups": 18446744073709551615,
         "CreateAttachments": false,
         "MaterialGroup": null,
-        "MaterialOverride": null,
-        "Model": "models/dev/box.vmdl",
+        "MaterialOverride": "materials/plate.vmat",
+        "Model": "models/plate.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -47,13 +47,13 @@
           "AfterUILayer": false
         },
         "RenderType": "On",
-        "Tint": "0.14357,0.2186,0.10879,1"
+        "Tint": "1,1,1,1"
       },
       {
         "__type": "Sandbox.BoxCollider",
-        "__guid": "048e8e5c-ed08-4fae-980e-dec06144df69",
+        "__guid": "95c21e30-c03c-4c6e-896e-058b0ba3bb53",
         "__enabled": true,
-        "Center": "0,0,0",
+        "Center": "0,0,-8",
         "Friction": null,
         "IsTrigger": false,
         "OnComponentDestroy": null,
@@ -66,7 +66,7 @@
         "OnObjectTriggerExit": null,
         "OnTriggerEnter": null,
         "OnTriggerExit": null,
-        "Scale": "50,50,50",
+        "Scale": "50,80,20",
         "Static": false,
         "Surface": null,
         "SurfaceVelocity": "0,0,0"

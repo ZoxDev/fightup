@@ -31,17 +31,16 @@ public class Item : Component
 
     private GameObject itemListInPlayer { get; set; }
     private PlayerController2D playerController { get; set; }
+    private GameObject player { get; set; }
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        GameObject player = GameObject.Parent.Parent;
+        GameObject player = GameObject.Scene.Directory.FindByName( "Player" ).First();
 
-        if ( player.Tags.Has( "player" ) )
-        {
-            itemListInPlayer = player.Children.Find( child => child.Tags.Has( "item-list" ) );
-            playerController = player.GetComponent<PlayerController2D>();
-        }
+        itemListInPlayer = player.Children.Find( child => child.Tags.Has( "item-list" ) );
+        playerController = player.GetComponent<PlayerController2D>();
+
     }
 
     protected override void OnDestroy()

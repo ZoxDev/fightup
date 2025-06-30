@@ -55,6 +55,7 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 	bool IPressable.Press( IPressable.Event e )
 	{
 		if ( allowPress ) TakeItem( e.Source.GameObject );
+		// TODO: remove old the item that you replace
 		GameObject.Destroy();
 
 		return true;
