@@ -24,9 +24,11 @@ public sealed class FakePlayerComponent : Component, Component.IDamageable
 		Move();
 	}
 
+	[Rpc.Broadcast]
 	void Move()
 	{
 		var gravity = Scene.PhysicsWorld.Gravity;
+		CharacterController.WorldPosition = new Vector3( 0, CharacterController.WorldPosition.y, CharacterController.WorldPosition.z );
 
 		if ( CharacterController.IsOnGround )
 		{
@@ -39,6 +41,7 @@ public sealed class FakePlayerComponent : Component, Component.IDamageable
 			CharacterController.ApplyFriction( AirFriction );
 		}
 
+		CharacterController.UseCollisionRules = true;
 		CharacterController.Move();
 	}
 
@@ -46,20 +49,30 @@ public sealed class FakePlayerComponent : Component, Component.IDamageable
 	{
 		health -= damage.Damage;
 
-		// hit animation
+		AnimationOnDamage( damage );
+
+		if ( health == 0 )
+		{
+			FakePlayerDied();
+		}
+	}
+	[Rpc.Broadcast]
+	void FakePlayerDied()
+	{
+		GameObject.Destroy();
+	}
+
+	[Rpc.Broadcast]
+	void AnimationOnDamage( DamageInfo damage )
+	{
 		Vector3 attackerPosition = damage.Attacker.WorldPosition;
 		Vector3 myPosition = GameObject.WorldPosition;
-		bool isAttackFromLeft = (myPosition - attackerPosition).y >= 0;
-		CharacterController.Punch( isAttackFromLeft ? Vector3.Right * 1000 : Vector3.Left * 1000 );
+		bool isAttackFromLeft = (myPosition - attackerPosition).y <= 0;
+		CharacterController.Punch( isAttackFromLeft ? Vector3.Right * 300 : Vector3.Left * 300 );
 
 		AnimationHelper.Target.Set( "hit", true );
 		AnimationHelper.Target.Set( "hit_strength", 100 );
 		AnimationHelper.Target.Set( "hit_direction", (myPosition - attackerPosition) );
-
-		if ( health == 0 )
-		{
-			GameObject.Destroy();
-		}
 	}
 
 	private void DebugText()

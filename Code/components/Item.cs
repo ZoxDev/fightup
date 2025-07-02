@@ -35,17 +35,18 @@ public class Item : Component
 
     protected override void OnAwake()
     {
-        base.OnAwake();
-        GameObject player = GameObject.Scene.Directory.FindByName( "Player" ).First();
+        GameObject player = PlayerController2D.LocalPlayer;
 
         itemListInPlayer = player.Children.Find( child => child.Tags.Has( "item-list" ) );
         playerController = player.GetComponent<PlayerController2D>();
-
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
+
+        if ( IsProxy ) return;
+
         itemListInPlayer.Children.Remove( GameObject );
         playerController.itemComponentList.Find( item => item == this );
         playerController.itemComponentList.Remove( this );

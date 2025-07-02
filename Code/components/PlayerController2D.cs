@@ -1,20 +1,36 @@
-using System;
-using System.Numerics;
 using Sandbox.Citizen;
 using Sandbox.UI;
 using static Sandbox.Citizen.CitizenAnimationHelper;
 
-public class PlayerController2D : Component, Component.IDamageable
+public class PlayerController2D : Component, Component.IDamageable, Component.INetworkSpawn
 {
+	void INetworkSpawn.OnNetworkSpawn( Connection owner )
+	{
+		var clothing = new ClothingContainer();
+		clothing.Deserialize( owner.GetUserData( "avatar" ) );
+		clothing.Apply( BodyRenderer );
+	}
 	protected override void OnAwake()
 	{
 		base.OnAwake();
 		Mouse.Visibility = MouseVisibility.Visible;
 
 		itemComponentList = new List<Item>();
-		playerCollider = GameObject.GetComponent<CapsuleCollider>();
-		body = GameObject.Children.Find( go => go.Name == "Body" );
+		_playerCollider = GameObject.GetComponent<CapsuleCollider>();
+		_body = GameObject.Children.Find( go => go.Name == "Body" );
+
+		if ( !IsProxy )
+		{
+			LocalPlayer = GameObject;
+		}
 	}
+
+	[Group( "Clothing" )]
+	[Property] public SkinnedModelRenderer BodyRenderer { get; set; }
+
+	public static GameObject LocalPlayer { get; private set; } = null;
+
+	[Sync] private bool isJumping { get; set; }
 
 	public TimeUntil NextPunch;
 	public TimeUntil NextGroundPunch;
@@ -23,47 +39,64 @@ public class PlayerController2D : Component, Component.IDamageable
 		/* -----------------------------------------------------------------------------
 		 * Movement
 		 * -----------------------------------------------------------------------------*/
-		Vector3 wishVelocity = getWishVelocity();
 
-		Move( wishVelocity );
-		bool isJumping = Input.Pressed( "Jump" );
-		if ( isJumping ) Jump();
-		if ( _isGroundPunch == false )
+		if ( !IsProxy )
 		{
-			LookAt();
+			Vector3 wishVelocity = getWishVelocity();
+
+			isJumping = Input.Pressed( "Jump" );
+
+			if ( isJumping )
+			{
+				Jump();
+				AnimateJunp();
+			}
+			Move( wishVelocity );
+			Pressing();
+			UseItem();
 			Animate( wishVelocity, isJumping );
 		}
 
-		Pressing();
-		UseItem();
+		if ( _isGroundPunch == false )
+		{
+			if ( !IsProxy )
+			{
+				LookAt();
+
+			}
+		}
 
 		/* -----------------------------------------------------------------------------
 		 * Combat
 		 * -----------------------------------------------------------------------------*/
-		//  primary
-		if ( Input.Pressed( "attack1" ) && NextPunch <= 0 && !_isGroundPunch )
-		{
-			PrimaryAttack();
-			NextPunch = PunchCoolDown;
-		}
 
-		// ground punch
-		// TODO: if is above 100f height he can ground punch
-		if ( Input.Pressed( "Duck" ) && NextGroundPunch <= 0 && !characterController.IsOnGround )
+		if ( !IsProxy )
 		{
-			InitializeGroundPunch();
-			NextGroundPunch = GroundPunchCoolDown;
-		}
+			//  primary
+			if ( Input.Pressed( "attack1" ) && NextPunch <= 0 && !_isGroundPunch )
+			{
+				PrimaryAttack();
+				NextPunch = PunchCoolDown;
+			}
 
-		if ( _isGroundPunch )
-		{
-			GroundPunching();
-		}
+			// ground punch
+			// TODO: if is above 100f height he can ground punch
+			if ( Input.Pressed( "Duck" ) && NextGroundPunch <= 0 && !CharacterController.IsOnGround )
+			{
+				InitializeGroundPunch();
+				NextGroundPunch = GroundPunchCoolDown;
+			}
 
-		if ( _isGroundPunch && Input.Released( "Duck" ) )
-		{
-			characterController.Punch( Vector3.Up * (GroundPunchForce * 0.5f) );
-			StopGroundPunching();
+			if ( _isGroundPunch )
+			{
+				GroundPunching();
+			}
+
+			if ( _isGroundPunch && Input.Released( "Duck" ) )
+			{
+				CharacterController.Punch( Vector3.Up * (GroundPunchForce * 0.5f) );
+				StopGroundPunching();
+			}
 		}
 	}
 
@@ -79,12 +112,13 @@ public class PlayerController2D : Component, Component.IDamageable
 	[Group( "Movement" )]
 	[Property] public float JumpForce { get; set; } = 400f;
 	[Group( "Movement" )]
-	[Property] public GameObject cameraGameObject { get; set; }
-	[Group( "Movement" )]
-	[Property] public GameObject head { get; set; }
-	[RequireComponent] CharacterController characterController { get; set; }
-	[RequireComponent] CitizenAnimationHelper animationHelper { get; set; }
-	private GameObject body { get; set; }
+	[Property] public GameObject Head { get; set; }
+	[RequireComponent] CharacterController CharacterController { get; set; }
+	[RequireComponent] CitizenAnimationHelper AnimationHelper { get; set; }
+	[Sync] private Vector2 _mousePosition { get; set; }
+	public GameObject CameraGameObject { get; set; }
+	private GameObject _body { get; set; }
+
 
 	Vector3 getWishVelocity()
 	{
@@ -97,7 +131,9 @@ public class PlayerController2D : Component, Component.IDamageable
 	const float PLAYER_EYES_POSITION_Z = 60f;
 	Vector2 getMousePosition()
 	{
-		float cameraZPos = cameraGameObject.WorldPosition.z;
+		if ( CameraGameObject == null || GameObject == null ) return Vector2.Zero;
+
+		float cameraZPos = CameraGameObject.WorldPosition.z;
 		float playerZPos = GameObject.WorldPosition.z;
 		float zToSubstract = (cameraZPos - playerZPos) - PLAYER_EYES_POSITION_Z;
 
@@ -111,52 +147,62 @@ public class PlayerController2D : Component, Component.IDamageable
 	{
 		var gravity = Scene.PhysicsWorld.Gravity;
 
-		if ( characterController.IsOnGround )
+		if ( CharacterController.IsOnGround )
 		{
-			characterController.Velocity = characterController.Velocity.WithX( 0 ).WithZ( 0 );
-			characterController.Accelerate( wishVelocity );
-			characterController.ApplyFriction( GroundFriction );
+			CharacterController.Velocity = CharacterController.Velocity.WithX( 0 ).WithZ( 0 );
+			CharacterController.Accelerate( wishVelocity );
+			CharacterController.ApplyFriction( GroundFriction );
 		}
 		else
 		{
-			characterController.Velocity += gravity * Time.Delta * 0.5f;
-			characterController.Accelerate( wishVelocity );
-			characterController.ApplyFriction( AirFriction );
+			CharacterController.Velocity += gravity * Time.Delta * 0.5f;
+			CharacterController.Accelerate( wishVelocity );
+			CharacterController.ApplyFriction( AirFriction );
 		}
 
-		characterController.Move();
+		CharacterController.UseCollisionRules = true;
+		CharacterController.Move();
 	}
 
 	void Jump()
 	{
-		if ( !characterController.IsOnGround ) return;
+		if ( !CharacterController.IsOnGround ) return;
 
-		characterController.Punch( Vector3.Up * JumpForce );
+		CharacterController.Punch( Vector3.Up * JumpForce );
 	}
+	[Rpc.Broadcast]
+	void AnimateJunp()
+	{
+		AnimationHelper?.TriggerJump();
+
+	}
+
+	[Rpc.Broadcast]
 	void LookAt()
 	{
-		Vector2 mousePosition = getMousePosition().Normal;
-		Vector3 directionX = new Vector3( 0, mousePosition.x, 0 );
+		_mousePosition = getMousePosition().Normal;
+		Vector3 directionX = new Vector3( 0, _mousePosition.x, 0 );
 
-		body.WorldRotation = Rotation.LookAt( directionX ).Angles();
+		if ( _mousePosition.x == 0 ) return;
+
+		_body.WorldRotation = Rotation.LookAt( directionX ).Angles();
 	}
 
-
+	[Rpc.Broadcast]
 	void Animate( Vector3 wishVelocity, bool isJumping = false )
 	{
-		if ( !animationHelper.IsValid() ) return;
+		if ( !AnimationHelper.IsValid() ) return;
 
-		animationHelper.IsGrounded = characterController.IsOnGround;
-		if ( isJumping && characterController.IsOnGround ) animationHelper?.TriggerJump();
-		animationHelper.WithVelocity( wishVelocity );
+		AnimationHelper.IsGrounded = CharacterController.IsOnGround;
+		AnimationHelper.WithVelocity( wishVelocity );
 
-		animationHelper.HoldType = HoldTypes.Punch;
-		animationHelper.MoveStyle = MoveStyles.Run;
+		AnimationHelper.HoldType = HoldTypes.Punch;
+		AnimationHelper.MoveStyle = MoveStyles.Run;
 
-		Vector2 mousePosition = getMousePosition().Normal;
-		Vector3 directionUp = new Vector3( 0, mousePosition.x, -mousePosition.y );
+		_mousePosition = getMousePosition().Normal;
+		Vector3 directionUp = new Vector3( 0, _mousePosition.x, -_mousePosition.y );
 
-		animationHelper.WithLook( directionUp );
+		AnimationHelper.WithLook( directionUp );
 	}
 
 	[Button]
@@ -175,10 +221,10 @@ public class PlayerController2D : Component, Component.IDamageable
 	/* -----------------------------------------------------------------------------
 	 * Press
 	 * -----------------------------------------------------------------------------*/
-	private CapsuleCollider playerCollider { get; set; }
+	private CapsuleCollider _playerCollider { get; set; }
 	void Pressing()
 	{
-		foreach ( Collider obj in playerCollider.Touching )
+		foreach ( Collider obj in _playerCollider.Touching )
 		{
 			IPressable pressable = obj.GetComponent<IPressable>();
 			if ( pressable == null ) return;
@@ -196,9 +242,9 @@ public class PlayerController2D : Component, Component.IDamageable
 	 * Combat
 	 * -----------------------------------------------------------------------------*/
 	[Group( "Combat" )]
-	[Property] public float attackCoolDown { get; set; }
+	[Property] public float AttackCoolDown { get; set; }
 	[Group( "Combat" )]
-	[Property] public float health { get; set; } = 100f;
+	[Property] public float Health { get; set; } = 100f;
 	[Group( "Combat" )]
 	[Property] public float PunchCoolDown { get; set; } = 0.5f;
 	[Group( "Combat" )]
@@ -211,34 +257,47 @@ public class PlayerController2D : Component, Component.IDamageable
 
 	void IDamageable.OnDamage( in DamageInfo damage )
 	{
-		health -= damage.Damage;
+		Health -= damage.Damage;
 
-		// hit animation
-		Vector3 attackerPosition = damage.Attacker.WorldPosition;
-		Vector3 myPosition = GameObject.WorldPosition;
-		bool isAttackFromLeft = (myPosition - attackerPosition).y >= 0;
-		characterController.Punch( isAttackFromLeft ? Vector3.Right * 1000 : Vector3.Left * 1000 );
+		OnDamageAnimation( damage );
 
-
-		animationHelper.Target.Set( "hit", true );
-		animationHelper.Target.Set( "hit_strength", 100 );
-		// TODO: fix hit direction
-		animationHelper.Target.Set( "hit_direction", (myPosition - attackerPosition) );
-
-		if ( health == 0 )
+		if ( Health == 0 )
 		{
 			Dead();
 		}
 	}
 
+	[Rpc.Broadcast]
+	private void Dead()
+	{
+		// TODO: implement dead system (ragdoll + like smash goes away fast in the hit direction)
+		GameObject.Destroy();
+	}
+
+	[Rpc.Broadcast]
+	void OnDamageAnimation( DamageInfo damage )
+	{
+		Vector3 attackerPosition = damage.Attacker.WorldPosition;
+		Vector3 myPosition = GameObject.WorldPosition;
+
+		bool isAttackFromLeft = (myPosition - attackerPosition).y <= 0;
+		CharacterController.Punch( isAttackFromLeft ? Vector3.Right * 500 : Vector3.Left * 500 );
+
+		AnimationHelper.Target.Set( "hit", true );
+		AnimationHelper.Target.Set( "hit_strength", 100 );
+		AnimationHelper.Target.Set( "hit_direction", (myPosition - attackerPosition) );
+
+		Log.Info( isAttackFromLeft );
+	}
+
 	void PrimaryAttack()
 	{
-		Vector2 mousePosition = getMousePosition();
+		_mousePosition = getMousePosition();
 
 		Vector3 start = GameObject.WorldPosition.WithZ( GameObject.WorldPosition.z + PLAYER_EYES_POSITION_Z );
-		Vector3 end = start + new Vector3( 0, mousePosition.x, -mousePosition.y ).Normal * 50;
+		Vector3 end = start + new Vector3( 0, _mousePosition.x, -_mousePosition.y ).Normal * 50;
 
-		animationHelper.Target.Set( "b_attack", true );
+		AnimatePrimaryAttack();
 
 		SceneTraceResult trace = Scene.Trace.Ray( start, end )
 		.WithTag( "player" )
@@ -258,24 +317,36 @@ public class PlayerController2D : Component, Component.IDamageable
 
 		hitDamageable.OnDamage( damageInfo );
 	}
+	[Rpc.Broadcast]
+	void AnimatePrimaryAttack()
+	{
+		AnimationHelper.Target.Set( "b_attack", true );
+	}
 
 	void InitializeGroundPunch()
 	{
 		_isGroundPunch = true;
-		characterController.Punch( Vector3.Down * GroundPunchForce );
+		CharacterController.Punch( Vector3.Down * GroundPunchForce );
 
 		// animating
-		animationHelper.IsSitting = true;
-		animationHelper.Sitting = SittingStyle.Floor;
-		animationHelper.HoldType = HoldTypes.None;
-		animationHelper.Target.Set( "b_grounded", true );
-		body.WorldRotation = Rotation.FromYaw( 0 );
+		AnimateGroundPunch();
 	}
 
-	private bool _isGroundPunch = false;
+	[Rpc.Broadcast]
+	void AnimateGroundPunch()
+	{
+		AnimationHelper.IsSitting = true;
+		AnimationHelper.Sitting = SittingStyle.Floor;
+		AnimationHelper.HoldType = HoldTypes.None;
+		AnimationHelper.Target.Set( "b_grounded", true );
+		_body.WorldRotation = Rotation.FromYaw( 0 );
+
+	}
+
+	[Sync] private bool _isGroundPunch { get; set; } = false;
 	void GroundPunching()
 	{
-		if ( characterController.IsOnGround )
+		if ( CharacterController.IsOnGround )
 		{
 			SceneTraceResult trace = Scene.Trace.Sphere( GroundPunchRadius, GameObject.WorldPosition, GameObject.WorldPosition )
 			.WithTag( "player" )
@@ -304,17 +375,17 @@ public class PlayerController2D : Component, Component.IDamageable
 
 	void StopGroundPunching()
 	{
-		animationHelper.IsSitting = false;
-		animationHelper.Sitting = SittingStyle.None;
-		animationHelper.HoldType = HoldTypes.Punch;
-
+		AnimationStopGroundPunch();
 		_isGroundPunch = false;
 	}
 
-	private void Dead()
+	[Rpc.Broadcast]
+	void AnimationStopGroundPunch()
 	{
-		// TODO: implement dead system (ragdoll + like smash goes away fast in the hit direction)
-		GameObject.Destroy();
+		AnimationHelper.IsSitting = false;
+		AnimationHelper.Sitting = SittingStyle.None;
+		AnimationHelper.HoldType = HoldTypes.Punch;
+
 	}
 
 	/* -----------------------------------------------------------------------------

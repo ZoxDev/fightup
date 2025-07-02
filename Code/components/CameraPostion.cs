@@ -6,26 +6,33 @@ using Sandbox.Services;
 
 public sealed class CameraPostion : Component
 {
-	[Property]
-	public float MaxCameraY { get; set; } = 50.0f;
-
-	float initialCameraPositionInZ = 0f;
-	float initialCameraPositionInX = 0f;
+	[Property] public float MaxCameraY { get; set; } = 50.0f;
+	[Property] private float initialCameraPositionInZ { get; set; } = 200f;
+	[Property] private float initialCameraPositionInX { get; set; } = 1000f;
+	private GameObject _player { get; set; } = null;
+	private Vector3 _playerPosition;
 
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-		Vector3 cameraPosition = GameObject.LocalPosition;
 
-		initialCameraPositionInZ = cameraPosition.z;
-		initialCameraPositionInX = cameraPosition.x;
 	}
 	protected override void OnUpdate()
 	{
-		Vector3 playerPosition = GameObject.Parent.LocalPosition;
+		if ( IsProxy ) return;
+
+		if ( PlayerController2D.LocalPlayer != null && _player == null )
+		{
+			_player = PlayerController2D.LocalPlayer;
+			PlayerController2D.LocalPlayer.GetComponent<PlayerController2D>().CameraGameObject = GameObject;
+		}
+
+		if ( _player == null ) return;
+
+		Vector3 playerPosition = _player.WorldPosition;
 		float playerPositionInZ = playerPosition.z;
 		float lerpFactor = playerPositionInZ / initialCameraPositionInZ;
 
-		GameObject.LocalPosition = Vector3.Lerp( new Vector3( initialCameraPositionInX, 0, initialCameraPositionInZ ), new Vector3( initialCameraPositionInX, 0, 0 ), lerpFactor );
+		GameObject.WorldPosition = Vector3.Lerp( new Vector3( playerPosition.x + initialCameraPositionInX, playerPosition.y, playerPosition.z + initialCameraPositionInZ ), new Vector3( playerPosition.x + initialCameraPositionInX, playerPosition.y, playerPosition.z ), lerpFactor );
 	}
 }
