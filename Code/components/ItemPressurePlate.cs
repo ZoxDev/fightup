@@ -4,11 +4,14 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 {
 	[Property] public List<GameObject> prefabItemList { get; set; }
 
-	private GameObject pickedPrefabItem { get; set; }
+	private GameObject _pickedPrefabItem { get; set; }
+	private Item _itemComponent { get; set; }
 	private void PickRandomItem()
 	{
 		int randomItemIndex = new Random().Next( 0, prefabItemList.Count );
-		pickedPrefabItem = prefabItemList[randomItemIndex];
+		_pickedPrefabItem = prefabItemList[randomItemIndex];
+		_pickedPrefabItem.NetworkSpawn();
+		_itemComponent = _pickedPrefabItem.GetComponent<Item>();
 	}
 	protected override void OnAwake()
 	{
@@ -24,9 +27,8 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 		if ( !gameObject.Tags.Has( "player" ) ) return;
 
 		PlayerController2D playerController = gameObject.GetComponent<PlayerController2D>();
-		Item itemComponent = pickedPrefabItem.GetComponent<Item>();
 
-		bool isSameItemType = playerController.itemComponentList.Find( item => item.itemType == itemComponent.itemType ) != null;
+		bool isSameItemType = playerController.itemComponentList.Find( item => item.itemType == _itemComponent.itemType ) != null;
 		if ( isSameItemType && !allowPress )
 		{
 			allowPress = true;
@@ -36,11 +38,11 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 		GameObject itemListGameObject = playerController.GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
 
 		CloneConfig cloneConfig = new CloneConfig();
-		cloneConfig.Name = pickedPrefabItem.Name;
+		cloneConfig.Name = _pickedPrefabItem.Name;
 		cloneConfig.Parent = itemListGameObject;
 		cloneConfig.StartEnabled = true;
 
-		pickedPrefabItem.Clone( cloneConfig );
+		_pickedPrefabItem.Clone( cloneConfig );
 
 		playerController.FetchItems();
 
@@ -70,10 +72,9 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 
 	private void ApplyItemModel()
 	{
-		Item itemComponent = pickedPrefabItem.GetComponent<Item>();
+		Model itemModel = _itemComponent.pressurePlateModel;
+		Material itemMaterial = _itemComponent.pressurePlateMaterial;
 
-		Model itemModel = itemComponent.pressurePlateModel;
-		Material itemMaterial = itemComponent.pressurePlateMaterial;
 
 		GameObject pressurePlateItemModelGameObject = GameObject.Children.Find( go => go.Name == "item-model" );
 		ModelRenderer pressurePlateItemModelRenderer = pressurePlateItemModelGameObject.GetOrAddComponent<ModelRenderer>();
@@ -97,6 +98,6 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 
 	private void DebugText()
 	{
-		DebugOverlay.Text( WorldPosition + Vector3.Up * 50, "picked: " + pickedPrefabItem, 32, TextFlag.None, Color.Red );
+		DebugOverlay.Text( WorldPosition + Vector3.Up * 50, "picked: " + _pickedPrefabItem, 32, TextFlag.None, Color.Red );
 	}
 }

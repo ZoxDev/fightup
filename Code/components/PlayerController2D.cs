@@ -1,3 +1,4 @@
+using System;
 using Sandbox.Citizen;
 using Sandbox.UI;
 using static Sandbox.Citizen.CitizenAnimationHelper;
@@ -19,7 +20,9 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		Mouse.Visibility = MouseVisibility.Visible;
 
 		itemComponentList = new List<Item>();
-		_playerCollider = GameObject.GetComponent<CapsuleCollider>();
+		_playerCollider = GameObject.GetComponentInChildren<CapsuleCollider>();
+
+
 		_body = GameObject.Children.Find( go => go.Name == "Body" );
 
 		if ( !IsProxy )
@@ -36,7 +39,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		/* -----------------------------------------------------------------------------
 		 * Movement
 		 * -----------------------------------------------------------------------------*/
-
 		if ( !IsProxy )
 		{
 			Vector3 wishVelocity = getWishVelocity();
@@ -46,7 +48,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 			if ( isJumping )
 			{
 				Jump();
-				AnimateJunp();
+
 			}
 			Move( wishVelocity );
 			Pressing();
@@ -59,7 +61,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 			if ( !IsProxy )
 			{
 				LookAt();
-
 			}
 		}
 
@@ -140,6 +141,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		return mousePosition;
 	}
 
+	[Property] public Rigidbody rigidbody;
 	void Move( Vector3 wishVelocity )
 	{
 		var gravity = Scene.PhysicsWorld.Gravity;
@@ -157,6 +159,8 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 			CharacterController.ApplyFriction( AirFriction );
 		}
 
+		rigidbody.Velocity = CharacterController.Velocity;
+
 		CharacterController.UseCollisionRules = true;
 		CharacterController.Move();
 	}
@@ -165,6 +169,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	{
 		if ( !CharacterController.IsOnGround ) return;
 
+		AnimateJunp();
 		CharacterController.Punch( Vector3.Up * JumpForce );
 	}
 	[Rpc.Broadcast]
