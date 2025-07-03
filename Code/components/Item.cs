@@ -29,27 +29,28 @@ public class Item : Component
     [Group( "Models" )]
     [Property] public Model prefabModel { get; set; }
 
-    private GameObject itemListInPlayer { get; set; }
-    private PlayerController2D playerController { get; set; }
-    private GameObject player { get; set; }
+    private GameObject _itemListInPlayer { get; set; }
+    private PlayerController2D _playerController { get; set; }
+    private GameObject _player { get; set; } = null;
 
-    protected override void OnAwake()
+    protected override void OnUpdate()
     {
-        GameObject player = PlayerController2D.LocalPlayer;
-
-        itemListInPlayer = player.Children.Find( child => child.Tags.Has( "item-list" ) );
-        playerController = player.GetComponent<PlayerController2D>();
+        base.OnUpdate();
+        if ( PlayerController2D.LocalPlayer != null && _player == null )
+        {
+            _player = PlayerController2D.LocalPlayer;
+            _itemListInPlayer = _player.Children.Find( child => child.Tags.Has( "item-list" ) );
+            _playerController = _player.GetComponent<PlayerController2D>();
+        }
     }
 
     protected override void OnDestroy()
     {
+        _itemListInPlayer.Children.Remove( GameObject );
+        _playerController.itemComponentList.Find( item => item == this );
+        _playerController.itemComponentList.Remove( this );
+
         base.OnDestroy();
-
-        if ( IsProxy ) return;
-
-        itemListInPlayer.Children.Remove( GameObject );
-        playerController.itemComponentList.Find( item => item == this );
-        playerController.itemComponentList.Remove( this );
     }
 
     public virtual void OnUseItem()

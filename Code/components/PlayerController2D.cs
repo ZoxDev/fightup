@@ -4,12 +4,15 @@ using static Sandbox.Citizen.CitizenAnimationHelper;
 
 public class PlayerController2D : Component, Component.IDamageable, Component.INetworkSpawn
 {
+	[Group( "Clothing" )]
+	[Property] public SkinnedModelRenderer BodyRenderer { get; set; }
 	void INetworkSpawn.OnNetworkSpawn( Connection owner )
 	{
 		var clothing = new ClothingContainer();
 		clothing.Deserialize( owner.GetUserData( "avatar" ) );
 		clothing.Apply( BodyRenderer );
 	}
+	public static GameObject LocalPlayer { get; private set; } = null;
 	protected override void OnAwake()
 	{
 		base.OnAwake();
@@ -25,13 +28,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		}
 	}
 
-	[Group( "Clothing" )]
-	[Property] public SkinnedModelRenderer BodyRenderer { get; set; }
-
-	public static GameObject LocalPlayer { get; private set; } = null;
-
 	[Sync] private bool isJumping { get; set; }
-
 	public TimeUntil NextPunch;
 	public TimeUntil NextGroundPunch;
 	protected override void OnFixedUpdate()

@@ -9,7 +9,7 @@
     "Scale": "1,2,1",
     "Tags": "platform",
     "Enabled": true,
-    "NetworkMode": 1,
+    "NetworkMode": 2,
     "NetworkInterpolation": true,
     "NetworkOrphaned": 0,
     "OwnerTransfer": 1,
