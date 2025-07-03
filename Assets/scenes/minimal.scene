@@ -444,6 +444,14 @@
             },
             "Property": "Position",
             "Value": "0,0,250"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "2527bd11-5614-4932-a7ba-10fc2f705ec0"
+            },
+            "Property": "NetworkMode",
+            "Value": 2
           }
         ],
         "MovedObjects": []

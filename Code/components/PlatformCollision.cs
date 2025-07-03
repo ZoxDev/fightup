@@ -5,7 +5,7 @@ public sealed class PlatformCollision : Component, Component.ICollisionListener,
 	{
 		Log.Info( "collision start with: " + other.Other.GameObject );
 		GameObject collidedGameObject = other.Other.GameObject;
-		if ( !collidedGameObject.Tags.Has( "player" ) || !collidedGameObject.IsProxy ) return;
+		if ( !collidedGameObject.Tags.Has( "player" ) ) return;
 
 
 		CharacterController characterController = collidedGameObject.GetOrAddComponent<CharacterController>();
@@ -21,7 +21,7 @@ public sealed class PlatformCollision : Component, Component.ICollisionListener,
 		Log.Info( "trigger emter with: " + other.GameObject );
 
 		GameObject collidedGameObject = other.GameObject;
-		if ( !collidedGameObject.Tags.Has( "player" ) || !collidedGameObject.IsProxy ) return;
+		if ( !collidedGameObject.Tags.Has( "player" ) ) return;
 
 		CharacterController characterController = collidedGameObject.GetOrAddComponent<CharacterController>();
 		if ( characterController.Velocity.z <= 0 )
