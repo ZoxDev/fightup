@@ -111,6 +111,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	[Property] public float JumpForce { get; set; } = 400f;
 	[Group( "Movement" )]
 	[Property] public GameObject Head { get; set; }
+	[Property] public Rigidbody rigidbody;
 	[RequireComponent] CharacterController CharacterController { get; set; }
 	[RequireComponent] CitizenAnimationHelper AnimationHelper { get; set; }
 	[Sync] private Vector2 _mousePosition { get; set; }
@@ -141,7 +142,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		return mousePosition;
 	}
 
-	[Property] public Rigidbody rigidbody;
 	void Move( Vector3 wishVelocity )
 	{
 		var gravity = Scene.PhysicsWorld.Gravity;

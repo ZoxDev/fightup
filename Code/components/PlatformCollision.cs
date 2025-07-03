@@ -3,7 +3,6 @@ public sealed class PlatformCollision : Component, Component.ICollisionListener,
 {
 	void ICollisionListener.OnCollisionStart( Collision other )
 	{
-		Log.Info( "collision start with: " + other.Other.GameObject );
 		GameObject collidedGameObject = other.Other.GameObject;
 		if ( !collidedGameObject.Tags.Has( "player" ) ) return;
 
@@ -18,8 +17,6 @@ public sealed class PlatformCollision : Component, Component.ICollisionListener,
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
-		Log.Info( "trigger emter with: " + other.GameObject );
-
 		GameObject collidedGameObject = other.GameObject;
 		if ( !collidedGameObject.Tags.Has( "player" ) ) return;
 
@@ -30,5 +27,4 @@ public sealed class PlatformCollision : Component, Component.ICollisionListener,
 			platformCollider.IsTrigger = false;
 		}
 	}
-
 }
