@@ -1,4 +1,4 @@
-using System;
+using System.Threading.Tasks;
 using Sandbox.Citizen;
 using Sandbox.UI;
 using static Sandbox.Citizen.CitizenAnimationHelper;
@@ -22,7 +22,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		itemComponentList = new List<Item>();
 		_playerCollider = GameObject.GetComponentInChildren<CapsuleCollider>();
 
-
 		_body = GameObject.Children.Find( go => go.Name == "Body" );
 
 		if ( !IsProxy )
@@ -34,12 +33,18 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	[Sync] private bool isJumping { get; set; }
 	public TimeUntil NextPunch;
 	public TimeUntil NextGroundPunch;
+
+	private bool _canMove { get; set; } = true;
 	protected override void OnFixedUpdate()
 	{
+		// weird but fix a lot of problems
+		GameObject.WorldPosition = new Vector3( 0, GameObject.WorldPosition.y, GameObject.WorldPosition.z );
+
+
 		/* -----------------------------------------------------------------------------
 		 * Movement
 		 * -----------------------------------------------------------------------------*/
-		if ( !IsProxy )
+		if ( !IsProxy && _canMove )
 		{
 			Vector3 wishVelocity = getWishVelocity();
 
@@ -56,19 +61,36 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 			Animate( wishVelocity, isJumping );
 		}
 
-		if ( _isGroundPunch == false )
+		if ( !IsProxy )
 		{
-			if ( !IsProxy )
+			if ( _isGroundPunch == false )
 			{
 				LookAt();
 			}
+
+			// TODO: fix this to ensure camera following while ragdoll
+
+			// if ( _isRagdoll == true && _ragdoll.IsValid() )
+			// {
+
+			// Log.Info( "world go" + GameObject.WorldPosition );
+			// Log.Info( "world body" + BodyRenderer.GameObject.WorldPosition );
+
+			// GameObject.WorldPosition = new Vector3(
+			// 	GameObject.WorldPosition.x,
+			// 	BodyRenderer.GetBoneObject( "pelvis" ).WorldPosition.y,
+			// 	BodyRenderer.GetBoneObject( "pelvis" ).WorldPosition.z + 65
+			// );
+			// }
 		}
+
+
 
 		/* -----------------------------------------------------------------------------
 		 * Combat
 		 * -----------------------------------------------------------------------------*/
 
-		if ( !IsProxy )
+		if ( !IsProxy && _canMove )
 		{
 			//  primary
 			if ( Input.Pressed( "attack1" ) && NextPunch <= 0 && !_isGroundPunch )
@@ -78,11 +100,9 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 			}
 
 			// ground punch
-			// TODO: if is above 100f height he can ground punch
-			if ( Input.Pressed( "Duck" ) && NextGroundPunch <= 0 && !CharacterController.IsOnGround )
+			if ( Input.Down( "Duck" ) && NextGroundPunch <= 0 && !CharacterController.IsOnGround )
 			{
 				InitializeGroundPunch();
-				NextGroundPunch = GroundPunchCoolDown;
 			}
 
 			if ( _isGroundPunch )
@@ -145,6 +165,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	void Move( Vector3 wishVelocity )
 	{
 		var gravity = Scene.PhysicsWorld.Gravity;
+		rigidbody.Sleeping = false;
 
 		if ( CharacterController.IsOnGround )
 		{
@@ -158,8 +179,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 			CharacterController.Accelerate( wishVelocity );
 			CharacterController.ApplyFriction( AirFriction );
 		}
-
-		rigidbody.Velocity = CharacterController.Velocity;
 
 		CharacterController.UseCollisionRules = true;
 		CharacterController.Move();
@@ -176,7 +195,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	void AnimateJunp()
 	{
 		AnimationHelper?.TriggerJump();
-
 	}
 
 	[Rpc.Broadcast]
@@ -207,17 +225,39 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		AnimationHelper.WithLook( directionUp );
 	}
 
+	private ModelPhysics _ragdoll = null;
+	private bool _isRagdoll = false;
 	[Button]
+	[Rpc.Broadcast]
 	public void Ragdoll()
 	{
-		// TODO: implem ragdoll
+		if ( !BodyRenderer.IsValid() ) return;
+
+		_ragdoll = GameObject.AddComponent<ModelPhysics>();
+
+		_ragdoll.Renderer = BodyRenderer;
+		_ragdoll.Model = BodyRenderer.Model;
+
+		_isRagdoll = true;
+		_canMove = false;
 	}
 
 	[Button]
+	[Rpc.Broadcast]
 	public void UnRagdoll()
 	{
-		// TODO: implem unragdoll
+		_ragdoll = GameObject.GetComponent<ModelPhysics>();
 
+		if ( !_ragdoll.IsValid() ) return;
+		_ragdoll.Destroy();
+
+		CharacterController.Velocity = 0;
+
+		GameObject.WorldPosition = BodyRenderer.GameObject.WorldPosition;
+		BodyRenderer.GameObject.LocalPosition = Vector3.Zero;
+
+		_isRagdoll = false;
+		_canMove = true;
 	}
 
 	/* -----------------------------------------------------------------------------
@@ -265,15 +305,31 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 
 		if ( Health == 0 )
 		{
-			Dead();
+			_ = Kill( damage.Attacker );
 		}
 	}
 
-	[Rpc.Broadcast]
-	private void Dead()
+	async Task Kill( GameObject attacker )
 	{
-		// TODO: implement dead system (ragdoll + like smash goes away fast in the hit direction)
+		if ( attacker == null ) return;
+
+		Vector3 attackerPosition = attacker.WorldPosition;
+		Vector3 myPosition = GameObject.WorldPosition;
+		bool isAttackFromLeft = (myPosition - attackerPosition).y <= 0;
+
+		OnKillAnimation( isAttackFromLeft );
+		await Task.DelaySeconds( 0.05f );
+		Ragdoll();
+		await Task.DelaySeconds( 3 );
 		GameObject.Destroy();
+	}
+
+	[Rpc.Broadcast]
+	void OnKillAnimation( bool isAttackFromLeft )
+	{
+		CharacterController.Punch( Vector3.Backward * 1500 );
+		CharacterController.Punch( Vector3.Up * 1000 );
+		CharacterController.Punch( isAttackFromLeft ? Vector3.Right * 1000 : Vector3.Left * 1000 );
 	}
 
 	[Rpc.Broadcast]
@@ -327,8 +383,21 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 
 	void InitializeGroundPunch()
 	{
+		Vector3 pos = GameObject.WorldPosition;
+
+		var cubeTrace = Scene.Trace
+		.Ray( pos, pos + Vector3.Down * 250 )
+		.Radius( 10f )
+		.WithTag( "platform" )
+		.Run();
+
+		DebugOverlay.Line( pos, pos + Vector3.Down * 250, Color.Orange, 2 );
+
+		if ( cubeTrace.Hit ) return;
+
 		_isGroundPunch = true;
 		CharacterController.Punch( Vector3.Down * GroundPunchForce );
+		NextGroundPunch = GroundPunchCoolDown;
 
 		// animating
 		AnimateGroundPunch();
@@ -342,7 +411,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		AnimationHelper.HoldType = HoldTypes.None;
 		AnimationHelper.Target.Set( "b_grounded", true );
 		_body.WorldRotation = Rotation.FromYaw( 0 );
-
 	}
 
 	[Sync] private bool _isGroundPunch { get; set; } = false;
@@ -363,7 +431,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 				IDamageable hitDamageable = trace.GameObject.GetComponent<IDamageable>();
 
 				DamageInfo damageInfo = new DamageInfo();
-				damageInfo.Damage = 5;
+				damageInfo.Damage = 10;
 				damageInfo.Attacker = GameObject;
 				damageInfo.Position = trace.HitPosition;
 

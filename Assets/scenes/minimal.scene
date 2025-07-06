@@ -410,7 +410,7 @@
                       "IdValue": "2527bd11-5614-4932-a7ba-10fc2f705ec0"
                     },
                     "Property": "Position",
-                    "Value": "0,0,250"
+                    "Value": "0,0,191.5148"
                   }
                 ],
                 "MovedObjects": []
@@ -552,7 +552,7 @@
           "Position": "0,0,0",
           "Rotation": "0,0,0,1",
           "Scale": "5,30,5",
-          "Tags": "",
+          "Tags": "platform",
           "Enabled": true,
           "NetworkMode": 2,
           "NetworkInterpolation": true,
@@ -673,84 +673,6 @@
               "OnComponentUpdate": null,
               "Shadows": true,
               "SkyColor": "1000,1000,1000,0"
-            }
-          ],
-          "Children": []
-        },
-        {
-          "__guid": "432ae867-96c6-40c4-ba37-1f53cc856632",
-          "__version": 1,
-          "Flags": 0,
-          "Name": "TestCube",
-          "Position": "0,150,20",
-          "Rotation": "0,0,0,1",
-          "Scale": "1,1,1",
-          "Tags": "",
-          "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
-          "NetworkOrphaned": 0,
-          "OwnerTransfer": 1,
-          "Components": [
-            {
-              "__type": "Sandbox.ModelRenderer",
-              "__guid": "1389ea0a-7852-4597-8af1-9a944847b89d",
-              "__enabled": true,
-              "BodyGroups": 18446744073709551615,
-              "CreateAttachments": false,
-              "MaterialGroup": null,
-              "MaterialOverride": null,
-              "Materials": null,
-              "Model": "models/dev/box.vmdl",
-              "OnComponentDestroy": null,
-              "OnComponentDisabled": null,
-              "OnComponentEnabled": null,
-              "OnComponentFixedUpdate": null,
-              "OnComponentStart": null,
-              "OnComponentUpdate": null,
-              "RenderOptions": {
-                "GameLayer": true,
-                "OverlayLayer": false,
-                "BloomLayer": false,
-                "AfterUILayer": false
-              },
-              "RenderType": "On",
-              "Tint": "1,1,1,1"
-            },
-            {
-              "__type": "CollisionTest",
-              "__guid": "de593bf1-a6a9-4c05-a4c4-bf7af8fdd9bf",
-              "__enabled": true,
-              "OnComponentDestroy": null,
-              "OnComponentDisabled": null,
-              "OnComponentEnabled": null,
-              "OnComponentFixedUpdate": null,
-              "OnComponentStart": null,
-              "OnComponentUpdate": null
-            },
-            {
-              "__type": "Sandbox.BoxCollider",
-              "__guid": "0126c6e4-1a14-476a-8fa6-407ec9185da4",
-              "__enabled": true,
-              "Center": "0,0,0",
-              "Elasticity": null,
-              "Friction": null,
-              "IsTrigger": false,
-              "OnComponentDestroy": null,
-              "OnComponentDisabled": null,
-              "OnComponentEnabled": null,
-              "OnComponentFixedUpdate": null,
-              "OnComponentStart": null,
-              "OnComponentUpdate": null,
-              "OnObjectTriggerEnter": null,
-              "OnObjectTriggerExit": null,
-              "OnTriggerEnter": null,
-              "OnTriggerExit": null,
-              "RollingResistance": null,
-              "Scale": "50,50,50",
-              "Static": false,
-              "Surface": null,
-              "SurfaceVelocity": "0,0,0"
             }
           ],
           "Children": []

@@ -6,7 +6,7 @@
     "Name": "platform",
     "Position": "0,0,0",
     "Rotation": "0,0,0,1",
-    "Scale": "1,2,1",
+    "Scale": "2,2,1",
     "Tags": "platform",
     "Enabled": true,
     "NetworkMode": 2,
