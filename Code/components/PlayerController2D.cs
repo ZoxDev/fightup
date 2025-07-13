@@ -13,7 +13,18 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		clothing.Deserialize( owner.GetUserData( "avatar" ) );
 		clothing.Apply( BodyRenderer );
 	}
-	public static GameObject LocalPlayer { get; private set; } = null;
+	public static PlayerController2D LocalPlayer
+	{
+		get
+		{
+			if ( !_local.IsValid() )
+			{
+				_local = Game.ActiveScene.GetAllComponents<PlayerController2D>().FirstOrDefault( x => x.Network.IsOwner );
+			}
+			return _local;
+		}
+	}
+	private static PlayerController2D _local = null;
 	protected override void OnAwake()
 	{
 		base.OnAwake();
@@ -23,11 +34,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		_playerCollider = GameObject.GetComponentInChildren<CapsuleCollider>();
 
 		_body = GameObject.Children.Find( go => go.Name == "Body" );
-
-		if ( !IsProxy )
-		{
-			LocalPlayer = GameObject;
-		}
 	}
 
 	[Sync] private bool isJumping { get; set; }
@@ -39,7 +45,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	{
 		// weird but fix a lot of problems
 		GameObject.WorldPosition = new Vector3( 0, GameObject.WorldPosition.y, GameObject.WorldPosition.z );
-
 
 		/* -----------------------------------------------------------------------------
 		 * Movement
@@ -344,8 +349,6 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 		AnimationHelper.Target.Set( "hit", true );
 		AnimationHelper.Target.Set( "hit_strength", 100 );
 		AnimationHelper.Target.Set( "hit_direction", (myPosition - attackerPosition) );
-
-		Log.Info( isAttackFromLeft );
 	}
 
 	void PrimaryAttack()
@@ -467,8 +470,9 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	[Property] public List<Item> itemComponentList { get; set; }
 	public void FetchItems()
 	{
+		if ( IsProxy ) return;
+
 		GameObject itemListGameObject = GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
-		Log.Info( "itemListGameObject" + itemListGameObject.Children.First() );
 
 		foreach ( GameObject itemGameObject in itemListGameObject.Children )
 		{
@@ -487,7 +491,7 @@ public class PlayerController2D : Component, Component.IDamageable, Component.IN
 	{
 		foreach ( Item item in itemComponentList )
 		{
-			bool isUsing = item.pressType == PressTypeEnum.Pressed ? Input.Pressed( item.inputAction.Name ) : Input.Down( item.inputAction.Name );
+			bool isUsing = item.PressType == PressTypeEnum.Pressed ? Input.Pressed( item.InputAction.Name ) : Input.Down( item.InputAction.Name );
 			if ( isUsing )
 			{
 				item.OnUseItem();

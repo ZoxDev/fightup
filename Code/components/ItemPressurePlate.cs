@@ -1,37 +1,28 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public sealed class ItemPressurePlate : Component, Component.ITriggerListener, Component.IPressable
 {
 	[Property] public List<GameObject> prefabItemList { get; set; }
-
-	private GameObject _pickedPrefabItem { get; set; }
-	private Item _itemComponent { get; set; }
-	private void PickRandomItem()
-	{
-		int randomItemIndex = new Random().Next( 0, prefabItemList.Count );
-		_pickedPrefabItem = prefabItemList[randomItemIndex];
-		_pickedPrefabItem.NetworkSpawn();
-		_itemComponent = _pickedPrefabItem.GetComponent<Item>();
-	}
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-
 		PickRandomItem();
 		ApplyItemModel();
 	}
 
-	private bool allowPress { get; set; } = false;
+	private bool _allowPress { get; set; } = false;
 	private void TakeItem( GameObject gameObject )
 	{
-		if ( !gameObject.Tags.Has( "player" ) ) return;
+		if ( gameObject.Tags.Has( "player" ) == false ) return;
+		if ( gameObject.IsProxy ) return;
 
-		PlayerController2D playerController = gameObject.GetComponent<PlayerController2D>();
+		PlayerController2D playerController = PlayerController2D.LocalPlayer;
 
-		bool isSameItemType = playerController.itemComponentList.Find( item => item.itemType == _itemComponent.itemType ) != null;
-		if ( isSameItemType && !allowPress )
+		bool isSameItemType = playerController.itemComponentList.Find( item => item.ItemType == _itemComponent.ItemType ) != null;
+		if ( isSameItemType )
 		{
-			allowPress = true;
+			_allowPress = true;
 			return;
 		}
 
@@ -42,11 +33,16 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 		cloneConfig.Parent = itemListGameObject;
 		cloneConfig.StartEnabled = true;
 
-		_pickedPrefabItem.Clone( cloneConfig );
-
+		_pickedPrefabItem.Clone( cloneConfig ).NetworkSpawn();
 		playerController.FetchItems();
 
-		if ( !isSameItemType ) GameObject.Destroy();
+		DestroyPressurePlate();
+	}
+
+	[Rpc.Broadcast]
+	void DestroyPressurePlate()
+	{
+		GameObject.Destroy();
 	}
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
@@ -56,9 +52,31 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 
 	bool IPressable.Press( IPressable.Event e )
 	{
-		if ( allowPress ) TakeItem( e.Source.GameObject );
-		// TODO: remove old the item that you replace
-		GameObject.Destroy();
+		if ( !_allowPress ) return false;
+		if ( e.Source.GameObject.Tags.Has( "player" ) == false ) return false;
+		if ( e.Source.IsProxy ) return false;
+
+		PlayerController2D playerController = PlayerController2D.LocalPlayer;
+		GameObject itemListGameObject = playerController.GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
+
+		// remove old item
+		Item itemToRemove = playerController.itemComponentList.Find( item => item.ItemType == _itemComponent.ItemType );
+		playerController.itemComponentList.Remove( itemToRemove );
+		Log.Info( itemListGameObject.Children.Count );
+		itemListGameObject.Children.Remove( itemToRemove.GameObject );
+		Log.Info( itemListGameObject.Children.Count );
+
+
+		// add the item
+		CloneConfig cloneConfig = new CloneConfig();
+		cloneConfig.Name = _pickedPrefabItem.Name;
+		cloneConfig.Parent = itemListGameObject;
+		cloneConfig.StartEnabled = true;
+
+		_pickedPrefabItem.Clone( cloneConfig ).NetworkSpawn();
+		playerController.FetchItems();
+
+		DestroyPressurePlate();
 
 		return true;
 	}
@@ -67,14 +85,22 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 	{
 		base.OnUpdate();
 		ItemMovement();
-		DebugText();
+	}
+
+	[Sync] private GameObject _pickedPrefabItem { get; set; }
+	private Item _itemComponent { get; set; }
+	private void PickRandomItem()
+	{
+		int randomItemIndex = new Random().Next( 0, prefabItemList.Count );
+		_pickedPrefabItem = prefabItemList[randomItemIndex];
+		_pickedPrefabItem.NetworkSpawn();
+		_itemComponent = _pickedPrefabItem.GetComponent<Item>();
 	}
 
 	private void ApplyItemModel()
 	{
-		Model itemModel = _itemComponent.pressurePlateModel;
-		Material itemMaterial = _itemComponent.pressurePlateMaterial;
-
+		Model itemModel = _itemComponent.PressurePlateModel;
+		Material itemMaterial = _itemComponent.PressurePlateMaterial;
 
 		GameObject pressurePlateItemModelGameObject = GameObject.Children.Find( go => go.Name == "item-model" );
 		ModelRenderer pressurePlateItemModelRenderer = pressurePlateItemModelGameObject.GetOrAddComponent<ModelRenderer>();
@@ -94,10 +120,5 @@ public sealed class ItemPressurePlate : Component, Component.ITriggerListener, C
 			new Vector3( 0, 0, 30 ),
 			MathF.Sin( t * MathF.PI * 2 ) * 0.5f + 0.5f
 		);
-	}
-
-	private void DebugText()
-	{
-		DebugOverlay.Text( WorldPosition + Vector3.Up * 50, "picked: " + _pickedPrefabItem, 32, TextFlag.None, Color.Red );
 	}
 }

@@ -13,51 +13,54 @@ public enum PressTypeEnum
 
 public class Item : Component
 {
-    [Property] public ItemTypeEnum itemType { get; set; }
+    [Property] public ItemTypeEnum ItemType { get; set; }
 
     [Group( "Uses" )]
-    [Property, InputAction] public InputAction inputAction { get; set; }
+    [Property, InputAction] public InputAction InputAction { get; set; }
     [Group( "Uses" )]
-    [Property] public PressTypeEnum pressType { get; set; }
+    [Property] public PressTypeEnum PressType { get; set; }
     [Group( "Uses" )]
-    [Property] public int useCount { get; set; } = 1;
+    [Property] public int UseCount { get; set; } = 1;
 
     [Group( "Models" )]
-    [Property] public Model pressurePlateModel { get; set; }
+    [Property] public Model PressurePlateModel { get; set; }
     [Group( "Models" )]
-    [Property] public Material pressurePlateMaterial { get; set; }
+    [Property] public Material PressurePlateMaterial { get; set; }
     [Group( "Models" )]
-    [Property] public Model prefabModel { get; set; }
+    [Property] public Model PrefabModel { get; set; }
 
-    private GameObject _itemListInPlayer { get; set; }
-    private PlayerController2D _playerController { get; set; }
     private GameObject _player { get; set; } = null;
+    private GameObject _itemListInPlayer { get; set; } = null;
+    private PlayerController2D _playerController { get; set; } = null;
 
     protected override void OnUpdate()
     {
+        if ( IsProxy ) return;
+
         base.OnUpdate();
-        if ( PlayerController2D.LocalPlayer != null && _player == null )
-        {
-            _player = PlayerController2D.LocalPlayer;
-            _itemListInPlayer = _player.Children.Find( child => child.Tags.Has( "item-list" ) );
-            _playerController = _player.GetComponent<PlayerController2D>();
-        }
+        _playerController ??= PlayerController2D.LocalPlayer;
+        _itemListInPlayer ??= _playerController.GameObject.Children.Find( child => child.Tags.Has( "item-list" ) );
     }
 
     protected override void OnDestroy()
     {
-        _itemListInPlayer.Children.Remove( GameObject );
-        _playerController.itemComponentList.Find( item => item == this );
+        if ( IsProxy ) return;
+        if ( _playerController == null ) return;
+        if ( _itemListInPlayer == null ) return;
+
+
+        _playerController.itemComponentList.Find( item => item == this && item._player == this._player );
         _playerController.itemComponentList.Remove( this );
+        _itemListInPlayer.Children.Remove( GameObject );
 
         base.OnDestroy();
     }
 
     public virtual void OnUseItem()
     {
-        useCount -= 1;
+        UseCount -= 1;
 
-        if ( useCount == 0 )
+        if ( UseCount == 0 )
         {
             GameObject.Destroy();
             return;

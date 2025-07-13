@@ -470,6 +470,499 @@
               }
             },
             {
+              "__guid": "bcd8b6d6-8efd-4257-8c7e-cc831743acd6",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-531.1807,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "bcd8b6d6-8efd-4257-8c7e-cc831743acd6",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "2b21d882-4c6c-45e6-81a6-f87643928f99",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "b4bae052-c6d3-4771-8c3f-54e4a198bfb2",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "72519416-ddf0-46e2-b64d-a7eca5d9815d",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "2c2d1764-04ae-43da-ab3d-00c7e4552ef1",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "6118d5e2-263c-4152-9d08-2c4fadabf65a",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "037676ad-268b-4525-b494-ff4f3a047656"
+              }
+            },
+            {
+              "__guid": "513b5c71-ab8b-46e7-9be1-84b5f4ded98b",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-668.0977,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "513b5c71-ab8b-46e7-9be1-84b5f4ded98b",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "ab442d78-575f-4020-9411-d71f7ff96845",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "6fc2aeae-61c3-47e5-9903-b38f95b30342",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "bdb6bc4e-710a-4844-b548-27efe4897b92",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "b519984b-d491-4b97-ad54-ac42398eff87",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "53a6d17c-2216-49c2-89d7-468b07016a08",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "38e342b4-4125-41cf-992b-b17b12266c62"
+              }
+            },
+            {
+              "__guid": "48e13b7b-1aac-4ae3-90b7-ef79436f94d4",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-784.2979,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "48e13b7b-1aac-4ae3-90b7-ef79436f94d4",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "3710a05a-d5f0-431b-ad9c-e09f153472e3",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "fd190971-abe5-49af-b04e-ff6dade4cbc8",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "9be3615c-1373-4483-a21c-ee0ade15957c",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "e2360ea9-d377-42f7-ac12-bf84d61b087b",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "12008061-0f60-4ebd-8346-dd8e690157a8",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "411868e2-8d8c-4ca6-921d-a5ca65ba8ef8"
+              }
+            },
+            {
+              "__guid": "d3796b09-7595-44a3-bf75-905765739740",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-904.9689,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "d3796b09-7595-44a3-bf75-905765739740",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "16bc742b-f121-42af-92ad-fe43b44e045f",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "ecac421d-dd8c-42f1-aaf5-95c90edcc8c0",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "edcf3111-6c45-4660-8ef5-f5a8b3880858",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "3545e87d-e64e-40ba-bfca-e0b1166be2ea",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "bc468191-3225-4709-b78a-ff8d6abee1c7",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "084bc0b8-a08a-410c-a4a7-e10c8df0a1eb"
+              }
+            },
+            {
+              "__guid": "70248dbc-6160-4b66-bd37-3edb1063a3b5",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1047.351,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "70248dbc-6160-4b66-bd37-3edb1063a3b5",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "397078f7-467b-4c67-9f42-0e717f5ac71f",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "fc812e36-90c7-42b6-8ed4-de245b7b90cb",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "f210fed8-77c5-416b-ac7b-51a223f2462b",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "0966b4c3-6593-4052-a5ca-9d834bcf611f",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "40425039-8296-49bc-b0ca-f9d652fbfeeb",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "4f57e1d2-0f54-478e-8ac9-6f2bef01386c"
+              }
+            },
+            {
+              "__guid": "15a7cc90-4e99-4ca8-b2e5-a2aa12081f6c",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1174.821,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "15a7cc90-4e99-4ca8-b2e5-a2aa12081f6c",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "3d30fa93-057c-491f-a9d1-6e9a3a4b14bc",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "6a494416-3ee3-4287-8452-69554b103e40",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "f49c40d2-c846-4833-89c7-3eb9aab80b9d",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "5ac7e49f-b5fd-4701-8d0e-17ed3ff2c27c",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "35635a60-b84f-4f41-b62a-3a65bd692f60",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "340e7856-1193-40e8-8a3a-c73fb7db50cf"
+              }
+            },
+            {
+              "__guid": "7ad92aef-e868-416a-9464-12b997edd876",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1297.794,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "7ad92aef-e868-416a-9464-12b997edd876",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "d785787a-0ebc-4972-8956-7898e8d2a147",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "7cf9f559-f257-4165-9ed9-2797b8777952",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "3907e125-b48a-4a7e-93a9-8b3ea5bd2d46",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "c39a6148-fe80-402c-9717-33ef7391c669",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "eb1bd827-c3b7-4bf0-a818-006303742300",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "91fa3325-fe89-4c18-9553-0db66cf8cfd0"
+              }
+            },
+            {
+              "__guid": "8e9a4663-befa-4baa-b7ef-bba696ca6306",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1407.715,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "8e9a4663-befa-4baa-b7ef-bba696ca6306",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "3d839612-1acd-4275-ae14-96e47702fd4b",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "60b39662-2832-4023-8f8b-120360474045",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "f5e29357-19f3-4ed7-9b35-8c9832460f0c",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "bc192607-c8ea-4cb3-96c5-e9653956709e",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "0f7e657f-2ac7-4057-993e-b662a7d8bc8f",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "cf906424-e5fa-4b82-af90-304938f23c71"
+              }
+            },
+            {
+              "__guid": "296409e2-822f-41cd-84b1-abe5c090dca0",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-329.3536,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "296409e2-822f-41cd-84b1-abe5c090dca0",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "b6a8c4ce-394b-4908-80f2-54f460e462ed",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "e6ce6c7e-024c-4dd6-977b-2a7e4478e742",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "c587f6d1-61f6-4930-88b2-036462fa11da",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "5ed5113c-b9d1-478e-90e7-876e51ac1887",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "b5ce1f1d-e43f-40b7-98f4-829aaccafc15",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "5a86730c-5aca-4d21-80a0-4974d3a89595"
+              }
+            },
+            {
+              "__guid": "0aa58078-e819-4e80-b199-fc6dae7f9040",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-466.0504,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "0aa58078-e819-4e80-b199-fc6dae7f9040",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "3e8de2fe-f210-422a-9ef5-168c87b383d3",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "1403e691-9e66-4341-a540-5109a41c1953",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "517ab490-9e04-4e53-9f5e-f28e16ef69c2",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "f80b83e0-bd69-4c44-9bfd-5e8fad42dc2b",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "d144d32b-dee5-4c0c-bd8e-d8c7a9474fe5",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "b4459b72-f251-41e5-b7e8-8e09d69ffcd7"
+              }
+            },
+            {
+              "__guid": "30b16d6e-732b-4a5f-ae88-e2502f3baff3",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-600.6776,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "30b16d6e-732b-4a5f-ae88-e2502f3baff3",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "a90304c0-c187-47ed-941f-1a1f029f6f2d",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "479159ba-a010-40ad-9a53-e0c202728094",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "2d42d7ce-94d8-44a6-a757-c38a020aff44",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "723d92fc-e2b3-4011-8dbb-812be2419bdc",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "893ac9ed-813f-4b62-8486-085a7b2abb65",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "319cc13a-f040-4ede-baed-f764459473be"
+              }
+            },
+            {
+              "__guid": "5f543d95-5c54-424a-95fc-f9f95365b380",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-979.0143,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "5f543d95-5c54-424a-95fc-f9f95365b380",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "b847c35c-a7cc-4034-be9b-37e48fee6189",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "6d766fa1-37e5-4948-8640-560000496a41",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "227db770-bd2b-41bc-8342-56cf4cd40546",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "485ab6c9-7954-4d9b-a14e-2b2f6cfa2edd",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "21b7367f-939b-44d4-be73-9b456a5ee4e8",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "1048133e-0d8e-4a0b-8148-3eecf1a741e1"
+              }
+            },
+            {
+              "__guid": "9c355603-1e0b-41f4-b493-85c4f763fb56",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-722.7603,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "9c355603-1e0b-41f4-b493-85c4f763fb56",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "d9f5ff54-1744-4fdc-80bf-86adb5bbc781",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "3de6cd96-f70f-4bc7-8125-1a00eab44a8f",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "3a58bc4b-cada-4f08-81bf-455403910cf6",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "98ec8799-ef0e-4b6d-9823-993cc34eb9c3",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "1e2342fb-229a-49cc-bdaa-431fa60089f6",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "27d0074b-e88c-43f2-b073-317f953f0003"
+              }
+            },
+            {
+              "__guid": "30b0aa8e-18cd-4b32-815f-28419c89a1c3",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-849.6182,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "30b0aa8e-18cd-4b32-815f-28419c89a1c3",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "8510f3a0-da29-40e8-ba00-0f2ebf40b713",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "b7fa6c23-0d98-41d3-adbe-dc7e9b18338c",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "bea05722-ba57-432c-9565-8280ed642382",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "e8f1eea9-2f72-459f-a907-d47dcb5a12bc",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "e24faafb-eab1-4d70-927e-9ec7e62b8676",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "916a4aa0-2fb8-4d77-8188-8df74fa1cdc2"
+              }
+            },
+            {
+              "__guid": "d67375d5-7672-4c62-b659-a106282d0899",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1108.758,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "d67375d5-7672-4c62-b659-a106282d0899",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "21d2dac3-1778-4093-b6c3-62fd1d4c9d41",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "50bc3c71-255d-4f8a-87eb-18f35abf6923",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "acfa4956-af48-4c9f-8352-7b16f59205b6",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "57708838-6cfc-4c5c-aa07-058717df6558",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "647fff02-a2fa-41dc-b673-2f03a3406201",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "f882d455-4583-4e0b-ac01-8e316ba8f6ad"
+              }
+            },
+            {
+              "__guid": "b903918e-d6e0-4cf3-b44a-b6be8758a4f5",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1233.819,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "b903918e-d6e0-4cf3-b44a-b6be8758a4f5",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "a5adcc5c-5d07-4548-b42a-f58189e4350b",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "2d1f9b1f-27d7-475b-adfc-2ab43f617bda",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "f2b8dd94-b4fd-482e-94da-660612c4d9f7",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "d68d34c1-7140-4b2c-a91a-6d07d4536a7b",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "98a42aa4-ce90-4f29-bf5e-6252cf297307",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "2bb68cd8-3005-4942-ae62-43d6ee3ecf12"
+              }
+            },
+            {
+              "__guid": "1d028b4f-7b12-4585-99af-22898ba68ef1",
+              "__version": 1,
+              "__Prefab": "prefabs/pressure-plate.prefab",
+              "__PrefabInstancePatch": {
+                "AddedObjects": [],
+                "RemovedObjects": [],
+                "PropertyOverrides": [
+                  {
+                    "Target": {
+                      "Type": "GameObject",
+                      "IdValue": "d75410ff-eec8-4381-a6a3-31f14090f534"
+                    },
+                    "Property": "Position",
+                    "Value": "0,-1350.855,0"
+                  }
+                ],
+                "MovedObjects": []
+              },
+              "__PrefabIdToInstanceId": {
+                "d75410ff-eec8-4381-a6a3-31f14090f534": "1d028b4f-7b12-4585-99af-22898ba68ef1",
+                "6bbe4d82-4ccc-4a50-b1ef-117a74ef0457": "664a3746-df01-4aad-898e-6e0edb372463",
+                "3d348ef3-3a45-4c33-90e3-cb2218951131": "f621147d-1f24-4005-9eb8-f6e03b6d67e4",
+                "3bd3fdc4-f642-4d26-ab6f-c3a362da7395": "54641981-e2fe-4e36-ae80-1d3d34c5c700",
+                "3932e3cc-9283-4cc7-9f2c-75c79f618302": "63497a98-1dbe-4ba3-b273-e54428ae77a7",
+                "bd3f66b5-adb6-4d2b-9472-ead1067b040c": "39644232-22c3-494a-b85e-289b2729e2ec",
+                "997671a3-7e6b-42c5-a060-20844afe7593": "1e855384-cf8d-401b-ba51-3a6f2b14474e"
+              }
+            },
+            {
               "__guid": "15c8f460-c81a-4c45-b56e-a0ba5e3c95a3",
               "__version": 1,
               "__Prefab": "prefabs/pressure-plate.prefab",
